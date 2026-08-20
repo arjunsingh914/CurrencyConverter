@@ -1,0 +1,104 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Arjun\CurrencyConverter\ViewModel\Converter $viewModel */
+$viewModel = $block->getData('view_model');
+?>
+<section class="currency-converter"
+         data-mage-init='{"Arjun_CurrencyConverter/js/converter": {
+             "currenciesUrl": "<?= $block->escapeUrl($viewModel->getCurrenciesUrl()) ?>",
+             "rateUrl": "<?= $block->escapeUrl($viewModel->getRateUrl()) ?>",
+             "historyUrl": "<?= $block->escapeUrl($viewModel->getHistoryUrl()) ?>",
+             "defaults": {"from": "USD", "to": "INR", "amount": 1, "days": 30}
+         }}'>
+    <header class="currency-converter__header">
+        <div>
+            <div class="currency-converter__title-row">
+                <h1><?= $block->escapeHtml(__('Currency Exchange Converter')) ?></h1>
+            </div>
+            <p><?= $block->escapeHtml(__('Real-time international exchange rates and historical trend analytics.')) ?></p>
+        </div>
+    </header>
+
+    <form class="currency-converter__form" data-role="currency-form">
+        <label class="currency-converter__field currency-converter__field--amount">
+            <span><?= $block->escapeHtml(__('Amount')) ?></span>
+            <input type="number"
+                   name="amount"
+                   data-role="amount"
+                   value="1"
+                   min="0"
+                   step="0.01"
+                   inputmode="decimal"
+                   autocomplete="off"/>
+        </label>
+
+        <label class="currency-converter__field">
+            <span><?= $block->escapeHtml(__('From')) ?></span>
+            <select name="from" data-role="from-currency">
+                <option value="">&hellip;</option>
+            </select>
+        </label>
+
+        <button class="currency-converter__swap"
+                type="button"
+                data-role="swap-currencies"
+                title="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>"
+                aria-label="<?= $block->escapeHtmlAttr(__('Swap currencies')) ?>">
+            <span aria-hidden="true">&harr;</span>
+        </button>
+
+        <label class="currency-converter__field">
+            <span><?= $block->escapeHtml(__('To')) ?></span>
+            <select name="to" data-role="to-currency">
+                <option value="">&hellip;</option>
+            </select>
+        </label>
+
+        <label class="currency-converter__field currency-converter__field--range">
+            <span><?= $block->escapeHtml(__('Range')) ?></span>
+            <select name="days" data-role="history-days">
+                <option value="7"><?= $block->escapeHtml(__('7 days')) ?></option>
+                <option value="30" selected><?= $block->escapeHtml(__('30 days')) ?></option>
+                <option value="90"><?= $block->escapeHtml(__('90 days')) ?></option>
+                <option value="365"><?= $block->escapeHtml(__('1 year')) ?></option>
+            </select>
+        </label>
+    </form>
+
+    <div class="currency-converter__status" data-role="status" role="status"></div>
+
+    <div class="currency-converter__summary" aria-label="<?= $block->escapeHtmlAttr(__('Conversion results')) ?>">
+        <div>
+            <span><?= $block->escapeHtml(__('Current rate')) ?></span>
+            <strong data-role="current-rate">-</strong>
+        </div>
+        <div class="currency-converter__summary-primary">
+            <span><?= $block->escapeHtml(__('Converted amount')) ?></span>
+            <strong data-role="converted-amount">-</strong>
+        </div>
+        <div>
+            <span><?= $block->escapeHtml(__('Rate date')) ?></span>
+            <strong data-role="rate-date">-</strong>
+        </div>
+    </div>
+
+    <div class="currency-converter__chart">
+        <div class="currency-converter__chart-head">
+            <strong><?= $block->escapeHtml(__('Historical rate')) ?></strong>
+            <span data-role="chart-range">-</span>
+        </div>
+        <div class="currency-converter__metrics">
+            <div><span><?= $block->escapeHtml(__('Period high')) ?></span><strong data-role="period-high">-</strong></div>
+            <div><span><?= $block->escapeHtml(__('Period low')) ?></span><strong data-role="period-low">-</strong></div>
+            <div><span><?= $block->escapeHtml(__('Average rate')) ?></span><strong data-role="average-rate">-</strong></div>
+            <div><span><?= $block->escapeHtml(__('Latest rate')) ?></span><strong data-role="latest-rate">-</strong></div>
+        </div>
+        <canvas data-role="history-chart"
+                height="320"
+                aria-label="<?= $block->escapeHtmlAttr(__('Historical exchange rate chart')) ?>"
+                role="img"></canvas>
+        <div class="currency-converter__chart-empty" data-role="chart-empty">
+            <?= $block->escapeHtml(__('No historical rates available.')) ?>
+        </div>
+    </div>
+</section>

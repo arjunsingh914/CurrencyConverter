@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      layout="2columns-right"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Arjun_CurrencyConverter::css/converter.css"/>
+    </head>
+    <body>
+        <attribute name="class" value="currency-converter-main-page"/>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="arjun.currency.converter"
+                   template="Arjun_CurrencyConverter::converter.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Arjun\CurrencyConverter\ViewModel\Converter</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
